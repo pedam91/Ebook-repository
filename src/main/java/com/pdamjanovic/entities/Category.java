@@ -25,4 +25,8 @@ public class Category extends AbstractEntity {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Category{" + "id='" + super.getId() + '\'' + ", name='" + name + '\'' + '}';
+	}
 }

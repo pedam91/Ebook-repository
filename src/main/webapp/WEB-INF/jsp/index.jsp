@@ -28,11 +28,11 @@
 		<h1>Welcome to Ebooks repository home page!</h1>
 		<span id="status"></span>
 		<br/>
-		<h3>Categories of books</h3> <br/>
+		<h3>Categories of books:</h3> <br/>
 	
 		<ul>
 			<c:forEach var="category" items="${categories}">
-				<li>${category}</li>
+				<li>${category.name}</li>
 			</c:forEach>
 		</ul>
 		<p>
