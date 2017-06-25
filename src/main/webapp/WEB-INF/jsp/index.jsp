@@ -26,16 +26,15 @@
 	</div>
 	<div class="jumbotron">
 		<h1>Welcome to Ebooks repository home page!</h1>
-		<p>
 		<span id="status"></span>
 		<br/>
-		<h3> Listing : </h3> <br/>
+		<h3>Categories of books</h3> <br/>
 	
 		<ul>
-			<c:forEach var="listValue" items="${lists}">
-				<li>${listValue}</li>
+			<c:forEach var="category" items="${categories}">
+				<li>${category}</li>
 			</c:forEach>
-		</ul></p>
+		</ul>
 		<p>
 	       <a class="btn btn-lg btn-primary" href="#navbar" role="button">Go &raquo;</a>
 	    </p>
