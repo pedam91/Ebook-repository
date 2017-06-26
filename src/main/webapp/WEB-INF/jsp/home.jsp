@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-<head>
-	<title>Ebooks repository home page</title>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
-	<link rel="stylesheet" href="css/app.css"></link>
-</head>
 
-<body>
-	<h1>Welcome to Ebooks repository home page!</h1>
+<%@include file="header.jsp" %>
+
+	<div>Welcome to the visitor home page. For additional functionalities, please log in.</div>
 
 	<span id="status"></span>
 	<br/>
-	<h3> Listing : </h3> <br/>
+	<h3>Categories of books:</h3> <br/>
 
 	<ul>
-		<c:forEach var="listValue" items="${lists}">
-			<li>${listValue}</li>
+		<c:forEach var="category" items="${categories}">
+			<li>${category.name}</li>
+
+			<ol>
+				<c:forEach var="book" items="${category.books}"> 
+					<li><a href="${pageContext.request.contextPath}/book/${book.id}"><c:out value="${book.title}"/></a></li>
+				</c:forEach>
+			</ol>
+
 		</c:forEach>
 	</ul>
 
-</body>
-</html>
+<%@include file="footer.jsp" %>

@@ -23,4 +23,6 @@ public interface BookService {
 
 	List<Book> findByTitle(String title);
 
+	Book findById(Long id);
+
 }

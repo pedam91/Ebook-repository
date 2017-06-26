@@ -8,15 +8,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.pdamjanovic.entities.Book;
-import com.pdamjanovic.repositories.elasticsearch.BookESRepository;
+import com.pdamjanovic.repositories.jpa.BookJPARepository;
 
 @Service
 public class BookServiceImpl implements BookService {
 
-	private BookESRepository bookRepository;
+//	private BookESRepository bookRepository;
+	private BookJPARepository bookRepository;
 
 	@Autowired
-	public void setBookRepository(BookESRepository bookRepository) {
+	public void setBookRepository(BookJPARepository bookRepository) {
 		this.bookRepository = bookRepository;
 	}
 
@@ -46,6 +47,11 @@ public class BookServiceImpl implements BookService {
 
 	public List<Book> findByTitle(String title) {
 		return bookRepository.findByTitle(title);
+	}
+
+	@Override
+	public Book findById(Long id) {
+		return bookRepository.findOne(id);
 	}
 
 }

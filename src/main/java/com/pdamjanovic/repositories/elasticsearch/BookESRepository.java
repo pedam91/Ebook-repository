@@ -16,4 +16,6 @@ public interface BookESRepository extends ElasticsearchRepository<Book, Long> {
 
 	List<Book> findByTitle(String title);
 
+	Book findById(Long id);
+
 }
