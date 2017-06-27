@@ -40,17 +40,15 @@ public class Book extends AbstractEntity {
 	public Book() {
 	}
 
-	public Book(Long id, String title, String author, String keywords, String publicationYear) {
-		this.setId(id);
+	public Book(String title, String author, String keywords, String publicationYear) {
 		this.title = title;
 		this.author = author;
 		this.keywords = keywords;
 		this.publicationYear = publicationYear;
 	}
 
-	public Book(Long id, String title, String author, String keywords, String publicationYear, Language language,
+	public Book(String title, String author, String keywords, String publicationYear, Language language,
 			Category category, User cataloguer, List<File> files) {
-		this.setId(id);
 		this.title = title;
 		this.author = author;
 		this.keywords = keywords;

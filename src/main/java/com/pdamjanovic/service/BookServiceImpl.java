@@ -33,10 +33,6 @@ public class BookServiceImpl implements BookService {
 		bookRepository.deleteAll();
 	}
 
-	public Book findOne(Long id) {
-		return bookRepository.findOne(id);
-	}
-
 	public Iterable<Book> findAll() {
 		return bookRepository.findAll();
 	}
@@ -49,7 +45,6 @@ public class BookServiceImpl implements BookService {
 		return bookRepository.findByTitle(title);
 	}
 
-	@Override
 	public Book findById(Long id) {
 		return bookRepository.findOne(id);
 	}

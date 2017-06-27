@@ -15,8 +15,6 @@ public interface BookService {
 
 	void deleteAll();
 
-	Book findOne(Long id);
-
 	Iterable<Book> findAll();
 
 	Page<Book> findByAuthor(String author, PageRequest pageRequest);
