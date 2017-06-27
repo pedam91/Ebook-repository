@@ -16,4 +16,7 @@ public interface UserService {
 
 	Iterable<User> findAll();
 
+	User findByEmail(String email);
+
+	User findById(Long id);
 }
