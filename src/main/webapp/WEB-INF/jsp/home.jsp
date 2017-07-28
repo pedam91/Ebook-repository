@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@include file="header.jsp" %>
 
-	<div>Welcome to the visitor home page. For additional functionalities, please log in.</div>
+	<sec:authorize access="isAnonymous()">
+		<div>Welcome to the visitor home page. For additional functionalities, please log in.</div>
+	</sec:authorize>
 
 	<span id="status"></span>
 	<br/>

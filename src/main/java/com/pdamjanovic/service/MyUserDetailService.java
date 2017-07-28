@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pdamjanovic.entities.User;
 import com.pdamjanovic.entities.UserRoles;
+import com.pdamjanovic.util.LoggedInUser;
 
 @Service("myUserDetailsService")
 public class MyUserDetailService implements UserDetailsService {
@@ -44,7 +45,7 @@ public class MyUserDetailService implements UserDetailsService {
 			break;
 		}
 
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, grantedAuthorities);		
+		return new LoggedInUser(user.getId(), user.getEmail(), user.getPassword(), true, true, true, true, grantedAuthorities);		
 
 	}
 
