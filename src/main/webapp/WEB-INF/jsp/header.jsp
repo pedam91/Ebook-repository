@@ -18,14 +18,22 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-left">
 					<li><a href="<c:url value="/search"/>">Search books</a></li>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="<c:url value="/user/all"/>">List all users</a></li>
+					</sec:authorize>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
 					<sec:authorize access="isAnonymous()">
-						<li><a href="<c:url value="/login"/>">Login</a></li>
 						<li><a href="<c:url value="/register"/>">Register</a></li>
+						<li><a href="<c:url value="/login"/>"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 						<sec:authentication var="loggedInUser" property="principal" />
-						<li><a href="<c:url value="/user/${loggedInUser.id}/edit"/>">Edit user info, email: ${loggedInUser.username}</a></li>
-						<li><a href="<c:url value="/logout"/>">Logout</a></li>
+						<li><div class="navbar-text">Signed in as: ${loggedInUser.username}</div></li>
+						<li><a href="<c:url value="/user/${loggedInUser.id}/edit"/>">
+							<span class="glyphicon glyphicon-user"></span> Edit user info</a></li>
+						<li><a href="<c:url value="/logout"/>">
+							<span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 					</sec:authorize>
 				</ul>
 			</div>

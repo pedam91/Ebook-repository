@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pdamjanovic.entities.User;
+import com.pdamjanovic.entities.UserRoles;
 import com.pdamjanovic.service.CategoryService;
 import com.pdamjanovic.service.UserService;
 
@@ -68,5 +70,23 @@ public class UserController {
 		model.put("message", "User info successfully updated.");
 
 		return "user";
+	}
+
+	@Secured({ UserRoles.ROLE_ADMIN })
+	@GetMapping(value = "/user/all")
+	public String getAllUsers(Map<String, Object> model) {
+
+		model.put("allUsers", userService.findAll());
+		return "users";
+	}
+
+	@Secured({ UserRoles.ROLE_ADMIN })
+	@GetMapping(value = "/user/{id}/delete")
+	public String deleteUserById(@PathVariable("id") Long userId, Map<String, Object> model) {
+
+		logger.info("Delete user by id:" + userId);
+		userService.deleteById(userId);
+		model.put("message", "User id: [" + userId + "] succesfully deleted.");
+		return getAllUsers(model);
 	}
 }
