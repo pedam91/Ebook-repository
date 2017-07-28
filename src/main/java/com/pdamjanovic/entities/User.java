@@ -3,20 +3,28 @@ package com.pdamjanovic.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class User extends AbstractEntity {
 
 	@Column
+	@NotBlank
+	@Size(min=2, max=50)
 	private String name;
 
 	@Column
+	@NotBlank
 	private String email;
 
 	@Column
+	@NotBlank
 	private String password;
 
 	@Column
+	@NotBlank
 	private String type;
 
 	@ManyToOne
