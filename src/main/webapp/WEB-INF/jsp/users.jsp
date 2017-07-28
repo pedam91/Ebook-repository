@@ -1,8 +1,5 @@
 <%@include file="header.jsp"%>
 
-<p>${message}</p>
-<br />
-
 <table class="table table-hover">
 
 	<thead>

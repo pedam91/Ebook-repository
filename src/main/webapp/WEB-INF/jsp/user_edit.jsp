@@ -1,7 +1,5 @@
 <%@include file="header.jsp" %>
 
-<p>${message}</p>
-
 <sf:form name="editUser" acceptCharset="UTF-8" method="post" modelAttribute="user" action="/user/${user.id}">
 	<table class="table table-hover">
 		<thead>
@@ -35,18 +33,16 @@
 				</td>
 				<td><sf:errors path="type"/></td>
 			</tr>
-
 			<tr>
 				<td>Category</td>
 				<td>
-					<sf:select path="category">					
+					<sf:select path="category">
 					     <sf:option value="">&nbsp;</sf:option>
 					     <sf:options itemLabel="name" items="${categories}"/>
 					</sf:select>
 				</td>
 				<td><sf:errors path="category"/></td>
 			</tr>
-
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="Submit" ></td>
 			</tr>

@@ -19,6 +19,7 @@
 				<ul class="nav navbar-nav navbar-left">
 					<li><a href="<c:url value="/search"/>">Search books</a></li>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="<c:url value="/book/create"/>">Create book</a></li>
 						<li><a href="<c:url value="/user/all"/>">List all users</a></li>
 					</sec:authorize>
 				</ul>
@@ -42,3 +43,6 @@
 	<br />
 	<br />
 	<br />
+	<c:if test="${infoMessage != null}"><div class="alert alert-info">${infoMessage}</div></c:if>
+	<c:if test="${successMessage != null}"><div class="alert alert-success">${successMessage}</div></c:if>
+	<c:if test="${errorMessage != null}"><div class="alert alert-danger">${errorMessage}</div></c:if>

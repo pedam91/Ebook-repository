@@ -20,10 +20,9 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String homePage(Map<String, Object> model) {
-		logger.info("HOME PAGE METHOD - GET");
 
+		logger.debug("HOME PAGE METHOD - GET");
 		model.put("categories", categoryService.findAll());
-		model.put("message", "Hello visitor!");
 
 		return "home";
 	}

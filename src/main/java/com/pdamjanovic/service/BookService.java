@@ -13,6 +13,8 @@ public interface BookService {
 
 	void delete(Book book);
 
+	void deleteById(Long id);
+
 	void deleteAll();
 
 	Iterable<Book> findAll();

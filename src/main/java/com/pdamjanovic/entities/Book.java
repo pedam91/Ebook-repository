@@ -6,7 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 @Document(indexName = "ebooks", type = "books")
@@ -14,9 +16,11 @@ import org.springframework.data.elasticsearch.annotations.Document;
 public class Book extends AbstractEntity {
 
 	@Column
+	@NotBlank
 	private String title;
 
 	@Column
+	@Size(min = 2, max = 50)
 	private String author;
 
 	@Column
@@ -25,10 +29,10 @@ public class Book extends AbstractEntity {
 	@Column
 	private String publicationYear;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Language language;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Category category;
 
 	@ManyToOne

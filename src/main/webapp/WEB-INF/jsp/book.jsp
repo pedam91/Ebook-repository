@@ -1,7 +1,5 @@
 <%@include file="header.jsp"%>
 
-<span id="status"></span>
-
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -43,5 +41,9 @@
 		</tr>
 	</tbody>
 </table>
+
+<a href="<c:url value="/book/${book.id}/edit"/>">Edit</a>
+<br />
+<a href="<c:url value="/book/${book.id}/delete"/>">Delete</a>
 
 <%@include file="footer.jsp"%>

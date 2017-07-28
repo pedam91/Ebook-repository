@@ -29,6 +29,10 @@ public class BookServiceImpl implements BookService {
 		bookRepository.delete(book);
 	}
 
+	public void deleteById(Long id) {
+		bookRepository.delete(id);
+	}
+
 	public void deleteAll() {
 		bookRepository.deleteAll();
 	}

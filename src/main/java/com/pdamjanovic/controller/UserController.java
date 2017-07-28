@@ -60,14 +60,14 @@ public class UserController {
 		logger.info("Edit user (POST) by id:" + userId);
 
 		if (errors.hasErrors()) {
-			model.put("message", "Please correct form errors.");
+			model.put("errorMessage", "Please correct form errors.");
 			return "user_edit";
 		}
 
 		User updated = userService.save(user);
 		model.put("user", updated);
 
-		model.put("message", "User info successfully updated.");
+		model.put("successMessage", "User info successfully updated.");
 
 		return "user";
 	}
@@ -86,7 +86,7 @@ public class UserController {
 
 		logger.info("Delete user by id:" + userId);
 		userService.deleteById(userId);
-		model.put("message", "User id: [" + userId + "] succesfully deleted.");
+		model.put("successMessage", "User id: [" + userId + "] succesfully deleted.");
 		return getAllUsers(model);
 	}
 }
