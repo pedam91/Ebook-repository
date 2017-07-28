@@ -23,29 +23,30 @@ public class MyUserDetailService implements UserDetailsService {
 	@Autowired
 	UserService userService;
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException, LockedException {
 
 		User user = userService.findByEmail(email);
 
-		if(user == null 
-//				|| !user.isActive()	// TODO
-				) {
+		if (user == null
+		// || !user.isActive() // TODO
+		) {
 			throw new UsernameNotFoundException("Invalid email");
 		}
 
 		Collection<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 
-		switch(user.getType()) {
-		case UserRoles.ROLE_ADMIN : 
+		switch (user.getType()) {
+		case UserRoles.ROLE_ADMIN:
 			grantedAuthorities.add(new SimpleGrantedAuthority(UserRoles.ROLE_ADMIN));
 			break;
-		case UserRoles.ROLE_USER :
+		case UserRoles.ROLE_USER:
 			grantedAuthorities.add(new SimpleGrantedAuthority(UserRoles.ROLE_USER));
 			break;
 		}
 
-		return new LoggedInUser(user.getId(), user.getEmail(), user.getPassword(), true, true, true, true, grantedAuthorities);		
+		return new LoggedInUser(user.getId(), user.getEmail(), user.getPassword(), true, true, true, true,
+				grantedAuthorities);
 
 	}
 

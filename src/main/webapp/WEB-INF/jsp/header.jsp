@@ -5,8 +5,8 @@
 <html>
 <head>
 <title>Ebooks repository</title>
-	<link rel="stylesheet" href="/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
 </head>
 <body>
 
@@ -23,15 +23,14 @@
 						<li><a href="<c:url value="/register"/>">Register</a></li>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
-						<sec:authentication var="loggedInUser" property="principal" />					
-						<li>
-							<a href="<c:url value="/user/${loggedInUser.id}/edit"/>">Edit user info, 
-							email: ${loggedInUser.username}</a>
-						</li>
+						<sec:authentication var="loggedInUser" property="principal" />
+						<li><a href="<c:url value="/user/${loggedInUser.id}/edit"/>">Edit user info, email: ${loggedInUser.username}</a></li>
 						<li><a href="<c:url value="/logout"/>">Logout</a></li>
 					</sec:authorize>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<br/><br/><br/>
+	<br />
+	<br />
+	<br />

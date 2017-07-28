@@ -13,8 +13,8 @@ public class EbooksApplication extends SpringBootServletInitializer {
 		return application.sources(EbooksApplication.class);
 	}
 
-    public static void main(String args[]) {
-        SpringApplication.run(EbooksApplication.class, args);
-    }
+	public static void main(String args[]) {
+		SpringApplication.run(EbooksApplication.class, args);
+	}
 
 }

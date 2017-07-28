@@ -46,24 +46,25 @@ public class UserController {
 
 		User user = userService.findById(userId);
 		model.put("user", user);
-		
+
 		model.put("categories", categoryService.findAll());
 		return "user_edit";
 	}
 
 	@PostMapping(value = "/user/{id}")
-	public String editUserByIdPost(@Validated @ModelAttribute("user") User user, BindingResult errors, @PathVariable("id") Long userId, Map<String, Object> model) {
+	public String editUserByIdPost(@Validated @ModelAttribute("user") User user, BindingResult errors,
+			@PathVariable("id") Long userId, Map<String, Object> model) {
 
 		logger.info("Edit user (POST) by id:" + userId);
-		
+
 		if (errors.hasErrors()) {
 			model.put("message", "Please correct form errors.");
 			return "user_edit";
 		}
-	
-		User updated = userService.save(user);		
+
+		User updated = userService.save(user);
 		model.put("user", updated);
-		
+
 		model.put("message", "User info successfully updated.");
 
 		return "user";

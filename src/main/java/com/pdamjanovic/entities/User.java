@@ -12,7 +12,7 @@ public class User extends AbstractEntity {
 
 	@Column
 	@NotBlank
-	@Size(min=2, max=50)
+	@Size(min = 2, max = 50)
 	private String name;
 
 	@Column
@@ -33,8 +33,7 @@ public class User extends AbstractEntity {
 	public User() {
 	}
 
-	public User(Long id, String name, String email, String password, String type,
-			Category category) {
+	public User(Long id, String name, String email, String password, String type, Category category) {
 		this.setId(id);
 		this.name = name;
 		this.email = email;
