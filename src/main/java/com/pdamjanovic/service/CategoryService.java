@@ -8,6 +8,8 @@ public interface CategoryService {
 
 	void delete(Category category);
 
+	void deleteById(Long id);
+
 	void deleteAll();
 
 	Category findOne(Long id);

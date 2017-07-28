@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
@@ -20,6 +21,7 @@
 					<li><a href="<c:url value="/search"/>">Search books</a></li>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="<c:url value="/book/create"/>">Create book</a></li>
+						<li><a href="<c:url value="/category/create"/>">Create category</a></li>
 						<li><a href="<c:url value="/user/all"/>">List all users</a></li>
 					</sec:authorize>
 				</ul>

@@ -23,6 +23,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public void deleteById(Long id) {
+		repository.delete(id);
+	}
+
+	@Override
 	public void deleteAll() {
 		repository.deleteAll();
 	}
