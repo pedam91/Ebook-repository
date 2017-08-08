@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +19,7 @@ import com.pdamjanovic.entities.User;
 import com.pdamjanovic.entities.UserRoles;
 import com.pdamjanovic.service.CategoryService;
 import com.pdamjanovic.service.UserService;
+import com.pdamjanovic.util.LoggedInUser;
 
 @Controller
 public class UserController {
@@ -34,9 +36,15 @@ public class UserController {
 	public String getUserById(@PathVariable("id") Long userId, Map<String, Object> model) {
 
 		logger.info("Get user by id:" + userId);
-
-		User user = userService.findById(userId);
-		model.put("user", user);
+		User loggedInUser = getLoggedInUser();
+		if (loggedInUser != null
+				&& (loggedInUser.getType().equals(UserRoles.ROLE_ADMIN) || loggedInUser.getId().equals(userId))) {
+			User user = userService.findById(userId);
+			model.put("user", user);
+		} else {
+			model.put("errorMessage", "You have no permission to access this user");
+			return "redirect:/";
+		}
 
 		return "user";
 	}
@@ -46,8 +54,15 @@ public class UserController {
 
 		logger.info("Edit user by id:" + userId);
 
-		User user = userService.findById(userId);
-		model.put("user", user);
+		User loggedInUser = getLoggedInUser();
+		if (loggedInUser != null
+				&& (loggedInUser.getType().equals(UserRoles.ROLE_ADMIN) || loggedInUser.getId().equals(userId))) {
+			User user = userService.findById(userId);
+			model.put("user", user);
+		} else {
+			model.put("errorMessage", "You have no permission to access this user");
+			return "redirect:/";
+		}
 
 		model.put("categories", categoryService.findAll());
 		return "user_edit";
@@ -59,13 +74,22 @@ public class UserController {
 
 		logger.info("Edit user (POST) by id:" + userId);
 
-		if (errors.hasErrors()) {
-			model.put("errorMessage", "Please correct form errors.");
-			return "user_edit";
-		}
+		User loggedInUser = getLoggedInUser();
+		if (loggedInUser != null
+				&& (loggedInUser.getType().equals(UserRoles.ROLE_ADMIN) || loggedInUser.getId().equals(userId))) {
 
-		User updated = userService.save(user);
-		model.put("user", updated);
+			if (errors.hasErrors()) {
+				model.put("errorMessage", "Please correct form errors.");
+				return "user_edit";
+			}
+
+			User updated = userService.save(user);
+			model.put("user", updated);
+
+		} else {
+			model.put("errorMessage", "You have no permission to access this user");
+			return "redirect:/";
+		}
 
 		model.put("successMessage", "User info successfully updated.");
 
@@ -88,5 +112,11 @@ public class UserController {
 		userService.deleteById(userId);
 		model.put("successMessage", "User id: [" + userId + "] succesfully deleted.");
 		return getAllUsers(model);
+	}
+
+	private User getLoggedInUser() {
+		LoggedInUser loggedInUser = (LoggedInUser) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		return loggedInUser == null ? null : userService.findById(loggedInUser.getId());
 	}
 }
