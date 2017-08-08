@@ -11,11 +11,11 @@
 		<c:forEach var="category" items="${categories}">
 			<li><a href="<c:url value="/category/${category.id}"/>">${category.name}</a></li>
 
-			<ol>
+			<ul>
 				<c:forEach var="book" items="${category.books}"> 
 					<li><a href="<c:url value="/book/${book.id}"/>">${book.title}</a></li>
 				</c:forEach>
-			</ol>
+			</ul>
 
 		</c:forEach>
 	</ul>

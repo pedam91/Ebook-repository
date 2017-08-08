@@ -42,8 +42,10 @@
 	</tbody>
 </table>
 
-<a href="<c:url value="/book/${book.id}/edit"/>">Edit</a>
-<br />
-<a href="<c:url value="/book/${book.id}/delete"/>">Delete</a>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<a href="<c:url value="/book/${book.id}/edit"/>">Edit</a>
+	<br />
+	<a href="<c:url value="/book/${book.id}/delete"/>">Delete</a>
+</sec:authorize>
 
 <%@include file="footer.jsp"%>
