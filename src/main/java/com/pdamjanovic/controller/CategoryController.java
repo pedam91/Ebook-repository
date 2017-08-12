@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.pdamjanovic.entities.Category;
 import com.pdamjanovic.entities.UserRoles;
 import com.pdamjanovic.service.CategoryService;
+import com.pdamjanovic.service.UserService;
+import com.pdamjanovic.util.LoggedInUser;
 
 @Controller
 public class CategoryController {
@@ -26,11 +29,24 @@ public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
 
+	@Autowired
+	UserService userService;
+
 	@GetMapping("/category/{id}")
 	public String getCategoryPage(@PathVariable("id") Long categoryId, Map<String, Object> model) {
 
-		Category category = categoryService.findOne(categoryId);
-		model.put("category", category);
+		Category requestedCategory = categoryService.findOne(categoryId);
+
+		Object loggedInUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (loggedInUser != null && loggedInUser instanceof LoggedInUser) {
+			Category usersCategory = userService.findById(((LoggedInUser) loggedInUser).getId()).getCategory();
+			if (usersCategory != null && !usersCategory.equals(requestedCategory)) {
+				model.put("errorMessage", "Not allowed to browse requested category");
+				return "redirect:/";
+			}
+		}
+
+		model.put("category", requestedCategory);
 
 		return "category";
 	}
