@@ -2,6 +2,7 @@ package com.pdamjanovic.service;
 
 import java.util.List;
 
+import org.elasticsearch.index.query.QueryBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -25,4 +26,7 @@ public interface BookService {
 
 	Book findById(Long id);
 
+	Page<Book> search(String title);
+
+	Page<Book> search(QueryBuilder queryBuilder);
 }

@@ -1,5 +1,6 @@
 package com.pdamjanovic.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,13 +11,19 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Document(indexName = "ebooks", type = "books")
+@JsonIgnoreProperties( value = {"category", "files", "cataloguer"} )
 @Entity
 public class Book extends AbstractEntity {
 
 	@Column
 	@NotBlank
+	@Field(type = FieldType.String)
 	private String title;
 
 	@Column
@@ -42,6 +49,7 @@ public class Book extends AbstractEntity {
 	private List<File> files;
 
 	public Book() {
+		this.files = new ArrayList<>();
 	}
 
 	public Book(String title, String author, String keywords, String publicationYear) {
@@ -49,6 +57,7 @@ public class Book extends AbstractEntity {
 		this.author = author;
 		this.keywords = keywords;
 		this.publicationYear = publicationYear;
+		this.files = new ArrayList<>();
 	}
 
 	public Book(String title, String author, String keywords, String publicationYear, Language language,
