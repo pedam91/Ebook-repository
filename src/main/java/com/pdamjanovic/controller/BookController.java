@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pdamjanovic.entities.Book;
 import com.pdamjanovic.entities.UserRoles;
@@ -123,12 +124,13 @@ public class BookController {
 
 	@Secured({ UserRoles.ROLE_ADMIN })
 	@GetMapping(value = "/book/{id}/delete")
-	public String deleteBookById(@PathVariable("id") Long bookId, Map<String, Object> model) {
+	public String deleteBookById(@PathVariable("id") Long bookId, RedirectAttributes redirectAttributes) {
 
 		logger.info("Delete book by id:" + bookId);
 
 		bookService.deleteById(bookId);
-		model.put("successMessage", "Book id: [" + bookId + "] succesfully deleted.");
+
+		redirectAttributes.addFlashAttribute("successMessage", "Book id: [" + bookId + "] succesfully deleted.");
 		return "redirect:/";
 	}
 

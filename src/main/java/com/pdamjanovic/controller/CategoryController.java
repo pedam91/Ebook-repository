@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pdamjanovic.entities.Category;
 import com.pdamjanovic.entities.UserRoles;
@@ -33,7 +34,8 @@ public class CategoryController {
 	UserService userService;
 
 	@GetMapping("/category/{id}")
-	public String getCategoryPage(@PathVariable("id") Long categoryId, Map<String, Object> model) {
+	public String getCategoryPage(@PathVariable("id") Long categoryId, Map<String, Object> model,
+			RedirectAttributes redirectAttributes) {
 
 		Category requestedCategory = categoryService.findOne(categoryId);
 
@@ -41,7 +43,7 @@ public class CategoryController {
 		if (loggedInUser != null && loggedInUser instanceof LoggedInUser) {
 			Category usersCategory = userService.findById(((LoggedInUser) loggedInUser).getId()).getCategory();
 			if (usersCategory != null && !usersCategory.equals(requestedCategory)) {
-				model.put("errorMessage", "Not allowed to browse requested category");
+				redirectAttributes.addFlashAttribute("errorMessage", "Not allowed to browse requested category");
 				return "redirect:/";
 			}
 		}
@@ -109,10 +111,11 @@ public class CategoryController {
 
 	@Secured({ UserRoles.ROLE_ADMIN })
 	@GetMapping("/category/{id}/delete")
-	public String deleteCategoryById(@PathVariable("id") Long categoryId, Map<String, Object> model) {
+	public String deleteCategoryById(@PathVariable("id") Long categoryId, RedirectAttributes redirectAttributes) {
 
 		categoryService.deleteById(categoryId);
-		model.put("successMessage", "Category id: [" + categoryId + "] successfully deleted");
+		redirectAttributes.addFlashAttribute("successMessage",
+				"Category id: [" + categoryId + "] successfully deleted");
 
 		return "redirect:/";
 	}

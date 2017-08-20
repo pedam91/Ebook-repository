@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pdamjanovic.entities.User;
 import com.pdamjanovic.entities.UserRoles;
@@ -33,7 +34,8 @@ public class UserController {
 	CategoryService categoryService;
 
 	@GetMapping(value = "/user/{id}")
-	public String getUserById(@PathVariable("id") Long userId, Map<String, Object> model) {
+	public String getUserById(@PathVariable("id") Long userId, Map<String, Object> model,
+			RedirectAttributes redirectAttributes) {
 
 		logger.info("Get user by id:" + userId);
 		User loggedInUser = getLoggedInUser();
@@ -42,7 +44,7 @@ public class UserController {
 			User user = userService.findById(userId);
 			model.put("user", user);
 		} else {
-			model.put("errorMessage", "You have no permission to access this user");
+			redirectAttributes.addFlashAttribute("errorMessage", "You have no permission to access this user");
 			return "redirect:/";
 		}
 
@@ -50,7 +52,8 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/user/{id}/edit")
-	public String editUserById(@PathVariable("id") Long userId, Map<String, Object> model) {
+	public String editUserById(@PathVariable("id") Long userId, Map<String, Object> model,
+			RedirectAttributes redirectAttributes) {
 
 		logger.info("Edit user by id:" + userId);
 
@@ -60,7 +63,7 @@ public class UserController {
 			User user = userService.findById(userId);
 			model.put("user", user);
 		} else {
-			model.put("errorMessage", "You have no permission to access this user");
+			redirectAttributes.addFlashAttribute("errorMessage", "You have no permission to access this user");
 			return "redirect:/";
 		}
 
@@ -70,7 +73,7 @@ public class UserController {
 
 	@PostMapping(value = "/user/{id}")
 	public String editUserByIdPost(@Validated @ModelAttribute("user") User user, BindingResult errors,
-			@PathVariable("id") Long userId, Map<String, Object> model) {
+			@PathVariable("id") Long userId, Map<String, Object> model, RedirectAttributes redirectAttributes) {
 
 		logger.info("Edit user (POST) by id:" + userId);
 
@@ -87,7 +90,7 @@ public class UserController {
 			model.put("user", updated);
 
 		} else {
-			model.put("errorMessage", "You have no permission to access this user");
+			redirectAttributes.addFlashAttribute("errorMessage", "You have no permission to access this user");
 			return "redirect:/";
 		}
 
