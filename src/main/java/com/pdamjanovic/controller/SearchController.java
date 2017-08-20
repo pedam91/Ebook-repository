@@ -48,15 +48,54 @@ public class SearchController {
 		QueryBuilder queryBuilder = null;
 		BoolQueryBuilder bquery = boolQuery();
 
-		String title = request.getParameter("title");
-		String titlest = request.getParameter("titlest");
-		SearchType.Type titleSearchType = SearchType.getType(titlest);
-		String titlesc = request.getParameter("titlesc");
-		Occur titleOccur = OccurTypes.getOccur(titlesc);
-
-		if (!(title == null || title.equals(""))) {
-			queryBuilder = createQuery(titleSearchType, "title", title);
+		String titleParam = request.getParameter("title");
+		if (!(titleParam == null || titleParam.equals(""))) {
+			String titlest = request.getParameter("titlest");
+			SearchType.Type titleSearchType = SearchType.getType(titlest);
+			String titlesc = request.getParameter("titlesc");
+			Occur titleOccur = OccurTypes.getOccur(titlesc);
+			queryBuilder = createQuery(titleSearchType, "title", titleParam);
 			addOccur(titleOccur, bquery, queryBuilder);
+		}
+
+		String authorParam = request.getParameter("author");
+		if (!(authorParam == null || authorParam.equals(""))) {
+			String searchTypeParam = request.getParameter("authorst");
+			SearchType.Type searchType = SearchType.getType(searchTypeParam);
+			String searchOccurParam = request.getParameter("titlesc");
+			Occur searchOccur = OccurTypes.getOccur(searchOccurParam);
+			queryBuilder = createQuery(searchType, "author", authorParam);
+			addOccur(searchOccur, bquery, queryBuilder);
+		}
+
+		String keywordsParam = request.getParameter("kwds");
+		if (!(keywordsParam == null || keywordsParam.equals(""))) {
+			String searchTypeParam = request.getParameter("kwst");
+			SearchType.Type searchType = SearchType.getType(searchTypeParam);
+			String searchOccurParam = request.getParameter("kwsc");
+			Occur searchOccur = OccurTypes.getOccur(searchOccurParam);
+			queryBuilder = createQuery(searchType, "keywords", keywordsParam);
+			addOccur(searchOccur, bquery, queryBuilder);
+		}
+
+		String languageParam = request.getParameter("language");
+		if (!(languageParam == null || languageParam.equals(""))) {
+			String searchTypeParam = request.getParameter("languagest");
+			SearchType.Type searchType = SearchType.getType(searchTypeParam);
+			String searchOccurParam = request.getParameter("languagesc");
+			Occur searchOccur = OccurTypes.getOccur(searchOccurParam);
+			queryBuilder = nestedQuery("language", createQuery(searchType, "language.name", languageParam));
+			addOccur(searchOccur, bquery, queryBuilder);
+		}
+
+		String fileContentParam = request.getParameter("content");
+		if (!(fileContentParam == null || fileContentParam.equals(""))) {
+			String searchTypeParam = request.getParameter("contentst");
+			SearchType.Type searchType = SearchType.getType(searchTypeParam);
+			String searchOccurParam = request.getParameter("contentsc");
+			Occur searchOccur = OccurTypes.getOccur(searchOccurParam);
+			queryBuilder = nestedQuery("files", createQuery(searchType, "files.content", fileContentParam));
+			addOccur(searchOccur, bquery, queryBuilder);
 		}
 
 		searchResults = bookService.search(bquery);

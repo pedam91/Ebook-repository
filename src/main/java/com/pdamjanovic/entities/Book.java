@@ -14,11 +14,12 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Document(indexName = "ebooks", type = "books")
-@JsonIgnoreProperties( value = {"category", "files", "cataloguer"} )
+@JsonIgnoreProperties(value = { "category", "cataloguer" })
 @Entity
 public class Book extends AbstractEntity {
 
@@ -29,15 +30,19 @@ public class Book extends AbstractEntity {
 
 	@Column
 	@Size(min = 2, max = 50)
+	@Field(type = FieldType.String)
 	private String author;
 
 	@Column
+	@Field(type = FieldType.String)
 	private String keywords;
 
 	@Column
+	@Field(type = FieldType.String)
 	private String publicationYear;
 
 	@ManyToOne(optional = false)
+	@Field(type = FieldType.Nested)
 	private Language language;
 
 	@ManyToOne(optional = false)
