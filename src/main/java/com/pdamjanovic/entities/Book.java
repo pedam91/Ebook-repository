@@ -3,6 +3,7 @@ package com.pdamjanovic.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -45,11 +46,11 @@ public class Book extends AbstractEntity {
 	@ManyToOne
 	private User cataloguer;
 
-	@OneToMany
-	private List<File> files;
+	@OneToMany(cascade = CascadeType.ALL)
+	@Field(type = FieldType.Nested)
+	private List<BookFile> files;
 
 	public Book() {
-		this.files = new ArrayList<>();
 	}
 
 	public Book(String title, String author, String keywords, String publicationYear) {
@@ -61,7 +62,7 @@ public class Book extends AbstractEntity {
 	}
 
 	public Book(String title, String author, String keywords, String publicationYear, Language language,
-			Category category, User cataloguer, List<File> files) {
+			Category category, User cataloguer, List<BookFile> files) {
 		this.title = title;
 		this.author = author;
 		this.keywords = keywords;
@@ -132,11 +133,11 @@ public class Book extends AbstractEntity {
 		this.cataloguer = cataloguer;
 	}
 
-	public List<File> getFiles() {
+	public List<BookFile> getFiles() {
 		return files;
 	}
 
-	public void setFiles(List<File> files) {
+	public void setFiles(List<BookFile> files) {
 		this.files = files;
 	}
 

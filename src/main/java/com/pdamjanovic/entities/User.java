@@ -82,4 +82,9 @@ public class User extends AbstractEntity {
 		this.category = category;
 	}
 
+	@Override
+	public String toString() {
+		return "User{" + "id='" + super.getId() + '\'' + ", email='" + email + '\'' + '}';
+	}
+
 }

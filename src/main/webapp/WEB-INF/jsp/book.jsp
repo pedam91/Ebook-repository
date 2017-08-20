@@ -37,7 +37,11 @@
 		</tr>
 		<tr>
 			<td>Download file</td>
-			<td>${book.files}</td>
+			<td>
+				<c:forEach items="${book.files}" var="file">
+					<c:out value="${file.fileName} "></c:out>
+				</c:forEach>				
+			</td>
 		</tr>
 	</tbody>
 </table>

@@ -1,6 +1,6 @@
 <%@include file="header.jsp"%>
 
-<sf:form name="bookForm" acceptCharset="UTF-8" method="post" modelAttribute="book">
+<sf:form name="bookForm" acceptCharset="UTF-8" method="post" modelAttribute="book" enctype="multipart/form-data">
 
 	<table class="table table-hover">
 		<thead>
@@ -60,14 +60,12 @@
 				<td><sf:errors path="cataloguer"/></td>
 			</tr>
 			</c:if>
-			<!-- 
 			<tr>
 				<td>File</td>
-				<td>${book.files}</td>
-				<td><sf:input path="files" value="${book.files}"/></td>
+				<td>${book.files.fileName}</td>
+				<td><input type="file" name="uploadfiles" multiple="multiple" accept=".pdf"/></td>
 				<td><sf:errors path="files"/></td>
 			</tr>
-			-->
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="Submit" ></td>
 			</tr>
