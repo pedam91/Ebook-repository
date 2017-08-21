@@ -36,10 +36,10 @@
 			<td>${book.cataloguer.name}</td>
 		</tr>
 		<tr>
-			<td>Download file</td>
+			<td>Book files</td>
 			<td>
 				<c:forEach items="${book.files}" var="file">
-					<c:out value="${file.fileName} "></c:out>
+					<a href="<c:url value="/book/download/${file.id}"/>"><c:out value="${file.fileName} "/></a>
 				</c:forEach>				
 			</td>
 		</tr>

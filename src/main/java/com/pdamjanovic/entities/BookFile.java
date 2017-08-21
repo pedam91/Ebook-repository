@@ -16,6 +16,9 @@ public class BookFile extends AbstractEntity {
 	@Column
 	private String mime;
 
+	@Column
+	private String storedFileName;
+
 	@Transient
 	private String content;
 
@@ -32,10 +35,11 @@ public class BookFile extends AbstractEntity {
 		this.mime = file.getContentType();
 	}
 
-	public BookFile(Long id, String fileName, String mime) {
+	public BookFile(Long id, String fileName, String mime, String storedFileName) {
 		this.setId(id);
 		this.fileName = fileName;
 		this.mime = mime;
+		this.storedFileName = storedFileName;
 	}
 
 	public String getFileName() {
@@ -52,6 +56,14 @@ public class BookFile extends AbstractEntity {
 
 	public void setMime(String mime) {
 		this.mime = mime;
+	}
+
+	public String getStoredFileName() {
+		return storedFileName;
+	}
+
+	public void setStoredFileName(String storedFileName) {
+		this.storedFileName = storedFileName;
 	}
 
 	public String getContent() {
