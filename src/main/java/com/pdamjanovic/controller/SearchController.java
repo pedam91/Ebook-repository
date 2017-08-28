@@ -68,7 +68,7 @@ public class SearchController {
 			addOccur(searchOccur, bquery, queryBuilder);
 		}
 
-		String keywordsParam = request.getParameter("kwds");
+		String keywordsParam = request.getParameter("kw");
 		if (!(keywordsParam == null || keywordsParam.equals(""))) {
 			String searchTypeParam = request.getParameter("kwst");
 			SearchType.Type searchType = SearchType.getType(searchTypeParam);
