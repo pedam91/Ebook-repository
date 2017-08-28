@@ -216,6 +216,7 @@ public class BookController {
 		return "redirect:/";
 	}
 
+	@Secured({ UserRoles.ROLE_USER, UserRoles.ROLE_ADMIN })
 	@GetMapping("/book/download/{fileId}")
 	public void downloadBookFile(@PathVariable("fileId") Long fileId, HttpServletResponse response) {
 
