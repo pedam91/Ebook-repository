@@ -25,7 +25,7 @@ public class Book extends AbstractEntity {
 
 	@Column
 	@NotBlank
-	@Field(type = FieldType.String)
+	@Field(type = FieldType.String, analyzer = "sr_analyzer")
 	private String title;
 
 	@Column
@@ -34,7 +34,7 @@ public class Book extends AbstractEntity {
 	private String author;
 
 	@Column
-	@Field(type = FieldType.String)
+	@Field(type = FieldType.String, analyzer = "sr_analyzer")
 	private String keywords;
 
 	@Column

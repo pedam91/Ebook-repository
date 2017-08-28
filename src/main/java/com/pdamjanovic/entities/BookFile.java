@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.servlet.http.Part;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
@@ -20,6 +22,7 @@ public class BookFile extends AbstractEntity {
 	private String storedFileName;
 
 	@Transient
+	@Field(type = FieldType.String, analyzer = "sr_analyzer")
 	private String content;
 
 	public BookFile() {
