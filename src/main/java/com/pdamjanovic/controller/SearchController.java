@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pdamjanovic.entities.Book;
@@ -101,6 +102,12 @@ public class SearchController {
 		searchResults = bookService.search(bquery);
 		model.put("searchResults", searchResults.getContent());
 
+		return "search_results";
+	}
+
+	@GetMapping("/search/similar/{bookId}")
+	public String moreLikeThis(@PathVariable("bookId") Long bookId, Map<String, Object> model) {
+		model.put("searchResults", bookService.searchSimilar(bookId).getContent());
 		return "search_results";
 	}
 

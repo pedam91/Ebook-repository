@@ -29,4 +29,6 @@ public interface BookService {
 	Page<Book> search(String title);
 
 	Page<Book> search(QueryBuilder queryBuilder);
+
+	Page<Book> searchSimilar(Long bookId);
 }

@@ -10,6 +10,7 @@
 		<tr>
 			<td width="20%">Title</td>
 			<td><a href="<c:url value="/book/${res.id}"/>">${res.title}</a></td>
+			<td><a href="<c:url value="/search/similar/${res.id}"/>">More like this</a></td>
 		</tr>
 	</c:forEach>
 </table>

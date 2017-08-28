@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.MoreLikeThisQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class BookServiceImpl implements BookService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private BookESRepository bookRepositoryIR;
 	private BookJPARepository bookRepository;
+	private ElasticsearchTemplate template;
 
 	@Autowired
 	public void setBookRepository(BookJPARepository bookRepository) {
@@ -33,6 +36,11 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	public void setBookRepositoryIR(BookESRepository bookRepositoryIR) {
 		this.bookRepositoryIR = bookRepositoryIR;
+	}
+
+	@Autowired
+	public void setTemplate(ElasticsearchTemplate template) {
+		this.template = template;
 	}
 
 	public Book save(Book book) {
@@ -92,4 +100,20 @@ public class BookServiceImpl implements BookService {
 		return matchQueryResult;
 	}
 
+	public Page<Book> searchSimilar(Long bookId) {
+		// can't set min freq here
+		// Book book = bookRepositoryIR.findOne(bookId);
+		// Page<Book> similarSearchResult = bookRepositoryIR.searchSimilar(book, new
+		// String[] { "title", "files.content" },
+		// Query.DEFAULT_PAGE);
+
+		MoreLikeThisQuery query = new MoreLikeThisQuery();
+		query.setId(bookId.toString());
+		query.setMinDocFreq(0);
+		query.setMinTermFreq(0);
+		Page<Book> similarSearchResult = template.moreLikeThis(query, Book.class);
+
+		log.info("searchSimilar [" + bookId + "] resulted in: " + similarSearchResult);
+		return similarSearchResult;
+	}
 }
