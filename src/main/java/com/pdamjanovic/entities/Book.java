@@ -2,19 +2,21 @@ package com.pdamjanovic.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import org.elasticsearch.search.highlight.HighlightField;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.Setting;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -54,6 +56,9 @@ public class Book extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL)
 	@Field(type = FieldType.Nested)
 	private List<BookFile> files;
+
+	@Transient
+	private Map<String, HighlightField> highlightedMessages;
 
 	public Book() {
 	}
@@ -144,6 +149,14 @@ public class Book extends AbstractEntity {
 
 	public void setFiles(List<BookFile> files) {
 		this.files = files;
+	}
+
+	public Map<String, HighlightField> getHighlightedMessages() {
+		return this.highlightedMessages;
+	}
+
+	public void setHighlightedMessages(Map<String, HighlightField> highlightedMessages) {
+		this.highlightedMessages = highlightedMessages;
 	}
 
 	@Override

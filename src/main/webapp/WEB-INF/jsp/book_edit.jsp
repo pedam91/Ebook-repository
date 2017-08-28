@@ -62,7 +62,11 @@
 			</c:if>
 			<tr>
 				<td>File</td>
-				<td>${book.files.fileName}</td>
+				<td>
+					<c:forEach items="${book.files}" var="file">
+						<c:out value="${file.fileName} "/>
+					</c:forEach>				
+				</td>
 				<td><input type="file" name="uploadfiles" multiple="multiple" accept=".pdf"/></td>
 				<td><sf:errors path="files"/></td>
 			</tr>

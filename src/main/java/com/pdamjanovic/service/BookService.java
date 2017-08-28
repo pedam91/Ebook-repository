@@ -30,5 +30,7 @@ public interface BookService {
 
 	Page<Book> search(QueryBuilder queryBuilder);
 
+	Page<Book> searchWithHighlights(QueryBuilder queryBuilder);
+
 	Page<Book> searchSimilar(Long bookId);
 }
