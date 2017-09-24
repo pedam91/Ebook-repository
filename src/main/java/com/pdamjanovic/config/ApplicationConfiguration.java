@@ -21,32 +21,26 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class ApplicationConfiguration extends SpringBootServletInitializer {
 
 	@Value("${elasticsearch.host}")
-	private String EsHost;
+	private String еsHost;
 
 	@Value("${elasticsearch.port}")
-	private int EsPort;
+	private int еsPort;
 
 	@Value("${elasticsearch.clustername}")
-	private String EsClusterName;
+	private String еsClusterName;
 
 	@Bean
 	public Client client() throws Exception {
 
-		Settings esSettings = Settings.settingsBuilder().put("cluster.name", EsClusterName).build();
+		Settings esSettings = Settings.settingsBuilder().put("cluster.name", еsClusterName).build();
 
 		return TransportClient.builder().settings(esSettings).build()
-				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(EsHost), EsPort));
+				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(еsHost), еsPort));
 	}
 
 	@Bean
 	public ElasticsearchOperations elasticsearchTemplate() throws Exception {
 		return new ElasticsearchTemplate(client());
 	}
-
-	// Embedded Elasticsearch Server
-	/*
-	 * @Bean public ElasticsearchOperations elasticsearchTemplate() { return new
-	 * ElasticsearchTemplate(nodeBuilder().local(true).node().client()); }
-	 */
 
 }
