@@ -26,8 +26,6 @@ public interface BookService {
 
 	Book findById(Long id);
 
-	Page<Book> search(String title);
-
 	Page<Book> search(QueryBuilder queryBuilder);
 
 	Page<Book> searchWithHighlights(QueryBuilder queryBuilder);

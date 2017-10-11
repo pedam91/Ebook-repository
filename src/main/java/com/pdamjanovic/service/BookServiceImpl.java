@@ -1,7 +1,5 @@
 package com.pdamjanovic.service;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,16 +84,6 @@ public class BookServiceImpl implements BookService {
 
 	public Book findById(Long id) {
 		return bookRepository.findOne(id);
-	}
-
-	@Override
-	public Page<Book> search(String title) {
-
-		SearchQuery matchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("title", title)).build();
-		Page<Book> matchQueryResult = bookRepositoryIR.search(matchQuery);
-		log.info("matchQueryResult: " + matchQueryResult);
-
-		return matchQueryResult;
 	}
 
 	@Override
