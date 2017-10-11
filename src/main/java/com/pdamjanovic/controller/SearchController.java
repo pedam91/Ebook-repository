@@ -130,11 +130,15 @@ public class SearchController {
 			break;
 		}
 		case range: {
-			retVal = rangeQuery(fieldName);
+			String[] values = fieldValue.split(" ");
+			if (values.length != 2) {
+				retVal = matchQuery(fieldName, fieldValue);
+				break;
+			}
+			retVal = rangeQuery(fieldName).from(values[0]).to(values[1]);
 			break;
 		}
 		case regular: {
-			// should be termQuery ?
 			retVal = matchQuery(fieldName, fieldValue);
 			break;
 		}
